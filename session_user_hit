@@ -10,16 +10,9 @@ $ip_address=$_SERVER["REMOTE_ADDR"];
 $user_agent=$_SERVER["HTTP_USER_AGENT"];
 $total='';
 $count_user_online='';
-// $dsn = 'mysql:dbname=yagoo;host=127.0.0.1';
-// $username='root'; // Mysql username
-// $password=''; // Mysql password
-// $db_name="yagoo"; // Database name
 $tbl_name="user_online"; // Table name
 $final = "final";
-// Connect to server and select databse
-// mysql_connect("$host", "$username", "$password")or die("cannot connect to server");
-// mysql_select_db("$db_name")or die("cannot select DB");
-//$tb = new PDO::'user_name';
+
 try {
 	$pdo = new PDO(DNS, DBU, DBP);  
 }  
