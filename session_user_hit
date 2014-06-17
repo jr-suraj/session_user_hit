@@ -12,9 +12,6 @@ $total='';
 $count_user_online='';
 $tbl_name="user_online"; // Table name
 $final = "final";
-define('DNS', 'mysql:host=127.0.0.1;dbname=your_dbname');
-define('DBU', 'root');
-define('DBP', '');
 
 try {
 	$pdo = new PDO(DNS, DBU, DBP);  
