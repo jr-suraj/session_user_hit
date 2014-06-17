@@ -5,13 +5,16 @@ $id='';
 $result='';
 $session=session_id();
 $time=time();
-$time_check=$time-300; //SET TIME 10 Minute
+$chk_time=$time-300; //SET TIME 10 Minute
 $ip_address=$_SERVER["REMOTE_ADDR"];
 $user_agent=$_SERVER["HTTP_USER_AGENT"];
 $total='';
 $count_user_online='';
 $tbl_name="user_online"; // Table name
 $final = "final";
+define('DNS', 'mysql:host=127.0.0.1;dbname=your_dbname');
+define('DBU', 'root');
+define('DBP', '');
 
 try {
 	$pdo = new PDO(DNS, DBU, DBP);  
@@ -65,12 +68,11 @@ $F_result->execute();
 //echo "User online : $count_user_online ";
 
 // if over 10 minute, delete session
-$sql4="DELETE FROM $tbl_name WHERE time<$time_check";
+$sql4="DELETE FROM $tbl_name WHERE time<$chk_time";
 $result4=$pdo->prepare($sql4);
 $result4->execute();
 
 // Open multiple browser page for result
-
 
 // Close connection
 
