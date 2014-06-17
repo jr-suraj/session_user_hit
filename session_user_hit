@@ -1,0 +1,86 @@
+<?php
+
+$sql3='';
+$id='';
+$result='';
+$session=session_id();
+$time=time();
+$time_check=$time-300; //SET TIME 10 Minute
+$ip_address=$_SERVER["REMOTE_ADDR"];
+$user_agent=$_SERVER["HTTP_USER_AGENT"];
+$total='';
+$count_user_online='';
+// $dsn = 'mysql:dbname=yagoo;host=127.0.0.1';
+// $username='root'; // Mysql username
+// $password=''; // Mysql password
+// $db_name="yagoo"; // Database name
+$tbl_name="user_online"; // Table name
+$final = "final";
+// Connect to server and select databse
+// mysql_connect("$host", "$username", "$password")or die("cannot connect to server");
+// mysql_select_db("$db_name")or die("cannot select DB");
+//$tb = new PDO::'user_name';
+try {
+	$pdo = new PDO(DNS, DBU, DBP);  
+}  
+catch(PDOException $e) {
+    echo $e->getMessage();
+}
+
+$sql= "SELECT * FROM $tbl_name WHERE session='$session'";
+$result=$pdo->prepare($sql);
+$result->execute();
+$count= $result->rowCount();
+
+if($count=="0"){
+
+$sql1="INSERT INTO $tbl_name(session, time, ip_address, user_agent)VALUES('$session', '$time', '$ip_address', 'user_agent')";
+$result1=$pdo->prepare($sql1);
+$result1->execute();
+
+}
+
+else {
+$sql2="UPDATE $tbl_name SET time='$time', ip_address='$ip_address', user_agent='$user_agent' WHERE session = '$session'";
+$result2=$pdo->prepare($sql2);
+$result2->execute();
+}
+
+
+$sql3="SELECT MAX(id) FROM $tbl_name";
+$result3=$pdo->prepare($sql3);
+$result3->execute();
+$id=$result3->fetchColumn();
+
+
+$sql5="SELECT * FROM $tbl_name";
+$result5=$pdo->prepare($sql5);
+$result5->execute();
+$count_user_online=$result5->rowCount();
+
+
+$f="SELECT count FROM $final";
+$ff=$pdo->prepare($f);
+$ff->execute();
+$fff=$ff->fetchColumn();
+
+if($fff < $id){
+$F_sql="UPDATE $final SET count='$id'";
+$F_result=$pdo->prepare($F_sql);
+$F_result->execute();
+}
+//echo "User online : $count_user_online ";
+
+// if over 10 minute, delete session
+$sql4="DELETE FROM $tbl_name WHERE time<$time_check";
+$result4=$pdo->prepare($sql4);
+$result4->execute();
+
+// Open multiple browser page for result
+
+
+// Close connection
+
+//$db_name=null;
+
+?>
