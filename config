@@ -1,0 +1,11 @@
+<?php
+
+define('DNS', 'mysql:host=127.0.0.1;dbname=your_db');
+define('DBU', 'root');
+define('DBP', '');
+
+date_default_timezone_set('Asia/Shanghai');
+
+session_start();
+
+?>
